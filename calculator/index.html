@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            transition: background-color 0.3s, color 0.3s;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        .calculator {
+            width: 300px;
+            background-color: #333333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .display {
+            padding: 20px;
+            font-size: 2rem;
+            background-color: #555555;
+            text-align: right;
+            border-bottom: 1px solid #777777;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            width: 100%;
+        }
+
+        .button {
+            padding: 20px;
+            font-size: 1.5rem;
+            background-color: #444444;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button:hover {
+            background-color: #ff5722;
+            color: #ffffff;
+        }
+
+        .button.operator {
+            color: #ff5722;
+        }
+
+        .button.backspace {
+            background-color: #ff5722;
+            color: #ffffff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 400px) {
+            .calculator {
+                width: 100%;
+                margin: 10px;
+            }
+
+            .display {
+                font-size: 1.5rem;
+            }
+
+            .button {
+                font-size: 1.2rem;
+                padding: 15px;
+                height: 70px; /* Ensure buttons are large enough */
+                width: 100%; /* Ensure buttons fill the available width */
+            }
+
+            .buttons {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="button" onclick="clearDisplay()">AC</button>
+            <button class="button" onclick="appendValue('%')">%</button>
+            <button class="button operator" onclick="appendValue('/')">/</button>
+            <button class="button operator" onclick="appendValue('*')">x</button>
+            <button class="button" onclick="appendValue('7')">7</button>
+            <button class="button" onclick="appendValue('8')">8</button>
+            <button class="button" onclick="appendValue('9')">9</button>
+            <button class="button operator" onclick="appendValue('-')">-</button>
+            <button class="button" onclick="appendValue('4')">4</button>
+            <button class="button" onclick="appendValue('5')">5</button>
+            <button class="button" onclick="appendValue('6')">6</button>
+            <button class="button operator" onclick="appendValue('+')">+</button>
+            <button class="button" onclick="appendValue('1')">1</button>
+            <button class="button" onclick="appendValue('2')">2</button>
+            <button class="button" onclick="appendValue('3')">3</button>
+            <button class="button operator" onclick="calculate()">=</button>
+            <button class="button" onclick="appendValue('0')" style="grid-column: span 2;">0</button>
+            <button class="button" onclick="appendValue('.')">.</button>
+            <button class="button backspace" onclick="backspace()">←</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+
+        function clearDisplay() {
+            display.innerText = '0';
+        }
+
+        function appendValue(value) {
+            if (display.innerText === '0') {
+                display.innerText = value;
+            } else {
+                display.innerText += value;
+            }
+        }
+
+        function calculate() {
+            try {
+                display.innerText = eval(display.innerText);
+            } catch {
+                display.innerText = 'Error';
+            }
+        }
+
+        function backspace() {
+            display.innerText = display.innerText.slice(0, -1) || '0';
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            const key = e.key;
+            if (key >= '0' && key <= '9') {
+                appendValue(key);
+            } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+                appendValue(key);
+            } else if (key === 'Enter' || key === '=') {
+                calculate();
+            } else if (key === 'Backspace') {
+                backspace();
+            } else if (key === '%') {
+                appendValue('%');
+            } else if (key === '.') {
+                appendValue('.');
+            }
+        });
+    </script>
+</body>
+</html>
