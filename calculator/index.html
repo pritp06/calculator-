@@ -16,6 +16,7 @@
             color: #ffffff;
             transition: background-color 0.3s, color 0.3s;
             overflow: hidden; /* Prevent scrolling */
+            flex-direction: column; /* Stack content */
         }
 
         .calculator {
@@ -27,6 +28,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            margin-bottom: 20px; /* Space between calculator and footer */
         }
 
         .display {
@@ -96,6 +98,17 @@
                 width: 100%;
             }
         }
+
+        footer {
+            text-align: center;
+            font-size: 1rem;
+            color: #777;
+            padding: 20px 0;
+            background-color: #333;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -123,6 +136,10 @@
             <button class="button backspace" onclick="backspace()">←</button>
         </div>
     </div>
+
+    <footer>
+        <p>© 2025 PritPatel. All rights reserved.</p>
+    </footer>
 
     <script>
         let display = document.getElementById('display');
